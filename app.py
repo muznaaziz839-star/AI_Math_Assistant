@@ -1,32 +1,24 @@
 import streamlit as st
-import solver
 from lecture_generator import generate_lecture
+from solver import solve_problem
 
-# Page title
-st.title("📘 AI Math Assistant")
+st.title("AI Mathematics Assistant")
 
-# ---------- Lecture Generator ----------
-st.header("📖 Generate Math Lecture")
-course = st.text_input("Course Name")
-topic = st.selectbox("Select Topic", ["Derivatives", "Integration"])
-semester = st.selectbox("Semester", ["1", "2", "3", "4"])
-difficulty = st.selectbox("Difficulty", ["Beginner", "Intermediate", "Advanced"])
+menu = st.sidebar.selectbox("Choose", ["Lecture", "Solve Problem"])
 
-if st.button("Generate Lecture"):
-    lecture = generate_lecture(topic, course, semester, difficulty)
-    st.markdown(lecture)
+if menu == "Lecture":
+    course = st.text_input("Course Name")
+    topic = st.text_input("Topic")
+    semester = st.selectbox("Semester", ["1", "2", "3", "4" , "5" , "6", "7","8"])
+    difficulty = st.selectbox("Difficulty", ["Beginner", "Intermediate", "Advanced"])
 
-# ---------- Divider ----------
-st.divider()
+    if st.button("Generate Lecture"):
+        output = generate_lecture(course, topic, semester, difficulty)
+        st.write(output)
 
-# ---------- Solver ----------
-st.header("🧮 Solve Equation")
+elif menu == "Solve Problem":
+    question = st.text_area("Enter math problem")
 
-expression = st.text_input("Enter equation (example: x**2 - 4)")
-
-if st.button("Solve"):
-    if expression:
-        result = solver.solve_expression(expression)
-        st.success(f"Solution: {result}")
-    else:
-        st.warning("Please enter an equation.")
+    if st.button("Solve"):
+        solution = solve_problem(question)
+        st.write(solution)
