@@ -1,3 +1,7 @@
 streamlit
 groq
+matplotlib
+reportlab
 sympy
+pandas
+plotly
